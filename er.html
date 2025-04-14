@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape Road</title>
+</head>
+<body>
+    <script>
+        // Auto-update script
+        const rawUrl = "https://raw.githubusercontent.com/sigmabread/gHub/main/er.html";
+        fetch(rawUrl)
+            .then(response => response.text())
+            .then(htmlContent => document.open().write(htmlContent))
+            .catch(err => console.error("Failed to fetch the latest content:", err));
+    </script>
+</body>
+</html>
