@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 400px;
+            font-family: Courier, monospace;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>File Editor</h1>
+
+    <!-- File selection input -->
+    <label for="file-input">Choose a file:</label>
+    <input type="file" id="file-input" accept=".txt,.js,.html,.css,.json,.md">
+    
+    <textarea id="file-content" placeholder="Choose a file to edit"></textarea>
+    
+    <!-- Button to save the file -->
+    <button id="save-button" disabled>Save File</button>
+
+    <script>
+        const fileInput = document.getElementById('file-input');
+        const fileContent = document.getElementById('file-content');
+        const saveButton = document.getElementById('save-button');
+        let currentFile = null;
+
+        // Handle file selection
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                currentFile = file;
+                const reader = new FileReader();
+                reader.onload = () => {
+                    fileContent.value = reader.result;
+                    saveButton.disabled = false;
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Handle saving the edited content
+        saveButton.addEventListener('click', () => {
+            if (currentFile) {
+                const editedContent = fileContent.value;
+                const blob = new Blob([editedContent], { type: 'text/plain' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = currentFile.name;
+                link.click();
+            }
+        });
+    </script>
+
+</body>
+</html>
